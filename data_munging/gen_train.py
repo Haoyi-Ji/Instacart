@@ -12,6 +12,7 @@ orders = pd.read_csv('../data/orders.csv')
 orders_train = orders[orders.eval_set=='train']
 products = pd.read_csv('../data/products.csv')
 
+print('Processing data...')
 product_prior = product_prior.merge(orders[['order_id', 'user_id']], how='left',
                                     on='order_id')
 product_train = product_train.merge(orders[['order_id', 'user_id']], how='left',
