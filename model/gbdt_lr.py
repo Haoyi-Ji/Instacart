@@ -11,7 +11,7 @@ from sklearn.metrics import accuracy_score
 RANDOM_SEED = 7
 
 
-class GBDT_LR():
+class GBDT_LR(BaseEstimator, ClassifierMixin):
     def __init__(self, lr_penalty='l1', random_state=RANDOM_SEED):
         self.random_state = random_state
         self.grd = GradientBoostingClassifier()
@@ -71,7 +71,7 @@ class GBDT_LR():
 print('Reading data...')
 data = pd.read_pickle('../data/train.pkl')
 print('Sampling data...')
-data = data.sample(500000, random_state=RANDOM_SEED)
+data = data.sample(10000, random_state=RANDOM_SEED)
 y = data.label
 X = data.drop(['label'], axis=1)
 X_train, X_test, y_train, y_test = train_test_split(X, y,
