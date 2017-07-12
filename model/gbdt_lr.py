@@ -30,7 +30,7 @@ class GBDT_LR(BaseEstimator, ClassifierMixin):
         max_threshold = threshold
         while threshold < 1:
             print('Threshold = {}'.format(threshold))
-            predicted_prob['y_pred'] = predicted_prob.proba.apply(lambda x: 1 if x > threshold else 0)
+            predicted_prob['y_pred'] = predicted_prob.proba.map(lambda x: 1 if x > threshold else 0)
             double_one_cnt = len(predicted_prob[predicted_prob.y_pred+predicted_prob.y_true==2])
             if double_one_cnt == 0:
                 threshold += step
