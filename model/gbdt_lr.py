@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import pandas as pd
-import pickle
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.metrics import accuracy_score
+from sklearn.externals import joblib
 
 RANDOM_SEED = 7
 
@@ -70,22 +70,22 @@ class GBDT_LR(BaseEstimator, ClassifierMixin):
 
 
 
-print('Reading data...')
-data = pd.read_pickle('../data/train.pkl')
-print('Sampling data...')
-data = data.sample(200000, random_state=RANDOM_SEED)
-y = data.label
-X = data.drop(['label'], axis=1)
-X_train, X_test, y_train, y_test = train_test_split(X, y,
-                                                    test_size=0.25,
-                                                    random_state=RANDOM_SEED)
-clf = GBDT_LR()
-print('Start training...')
-clf.fit(X_train, y_train)
-predicted = clf.predict(X_test)
-accuracy = accuracy_score(predicted['y_pred'], y_test)
-print('Accuracy: {}'.format(accuracy))
+if __name__ == '__main__':
+    print('Reading data...')
+    data = pd.read_pickle('../data/train.pkl')
+    print('Sampling data...')
+    data = data.sample(200000, random_state=RANDOM_SEED)
+    y = data.label
+    X = data.drop(['label'], axis=1)
+    X_train, X_test, y_train, y_test = train_test_split(X, y,
+                                                        test_size=0.25,
+                                                        random_state=RANDOM_SEED)
+    clf = GBDT_LR()
+    print('Start training...')
+    clf.fit(X_train, y_train)
+    predicted = clf.predict(X_test)
+    accuracy = accuracy_score(predicted['y_pred'], y_test)
+    print('Accuracy: {}'.format(accuracy))
 
-# save model
-with open('gbdt_lr_model.pkl', 'wb') as f:
-    pickle.dump(clf, f)
+    # save model
+    joblib.dump(clf, 'gbdt_lr_model.pkl')
