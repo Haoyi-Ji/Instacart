@@ -47,12 +47,12 @@ mergedata_grouped = mergedata_grouped.rename(
 
 data = data.merge(products, how='left', on='product_id')
 data = pd.get_dummies(data=data, columns=['department_id', 'aisle_id'])
-cols_to_drop = ['order_id', 'product_id', 'user_id', 'product_name']
+cols_to_drop = ['product_id', 'user_id', 'product_name']
 data.drop(cols_to_drop, axis=1, inplace=True)
 
 # save data
 print('Saving data...')
-train_data = data[data.eval_set=='train'].drop('eval_set', axis=1)
+train_data = data[data.eval_set=='train'].drop(['order_id', 'eval_set'], axis=1)
 test_data = data[data.eval_set=='test'].drop('eval_set', axis=1)
 train_data.to_pickle('../data/train.pkl')
 test_data.to_pickle('../data/test.pkl')
