@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import pandas as pd
+import pickle
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.ensemble import GradientBoostingClassifier
@@ -85,3 +86,6 @@ predicted = clf.predict(X_test)
 accuracy = accuracy_score(predicted['y_pred'], y_test)
 print('Accuracy: {}'.format(accuracy))
 
+# save model
+with open('gbdt_lr_model.pkl', 'wb') as f:
+    pickle.dump(clf, f)
