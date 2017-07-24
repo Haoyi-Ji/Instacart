@@ -74,7 +74,7 @@ if __name__ == '__main__':
     print('Reading data...')
     data = pd.read_pickle('../data/train.pkl')
     print('Sampling data...')
-    data = data.sample(200000, random_state=RANDOM_SEED)
+    data = data.sample(300000, random_state=RANDOM_SEED)
     y = data.label
     X = data.drop(['label'], axis=1)
     X_train, X_test, y_train, y_test = train_test_split(X, y,
